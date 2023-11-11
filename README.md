@@ -5,3 +5,5 @@ Week2 homework 2: homework/caesar-encrypt-decrypt.py
 
 Week2 homework 5: homework/class-inheritance.py
 
+Week2 homework 6: homework/triangle-area.py
+
