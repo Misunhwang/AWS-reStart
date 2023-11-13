@@ -1,19 +1,24 @@
-from dataclasses import dataclass
+from pydantic import BaseModel, field_validator
 
-@dataclass
-class ItemOrigin:
+class ItemOrigin(BaseModel):
     country: str
     production_date: str
     
-@dataclass
-class InventoryItem:
+    @field_validator("country")
+    @classmethod
+    def check_valid_country(cls, country: str):
+        assert country == "Ethiopia", "country name must be Ethiopia"
+        return country
+
+class InventoryItem(BaseModel):
     name: str
     quantity: int
     serial_num: str
     origin: ItemOrigin
 
+
 def main():
-    item_origin = ItemOrigin(country="Ethiopian", production_date="02/12/2023")
+    item_origin = ItemOrigin(country="Ethiopia", production_date="02/12/2023")
 
     # 1. DCO : Data Classes Object
     my_item1 = InventoryItem(name="printer", 
