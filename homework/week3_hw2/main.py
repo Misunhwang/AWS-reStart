@@ -1,51 +1,21 @@
-from pydantic import BaseModel, field_validator
-
-class BookItem(BaseModel):
-    name : str
-    author : str
-    year_published : int
-
-    @field_validator("year_published")
-    @classmethod
-    def check_valid_country(cls, year_published: int):
-        assert year_published >=2023, "year_published must be greater than 2023"
-        assert year_published < 3000, "year_published must be less than 3000"
-        return year_published
-
-class ItemOrigin(BaseModel):
-    country: str
-    production_date: str
-    
-    @field_validator("country")
-    @classmethod
-    def check_valid_country(cls, country: str):
-        assert country == "Ethiopia", "country name must be Ethiopia"
-        return country
-
-class InventoryItem(BaseModel):
-    name: str
-    quantity: int
-    serial_num: str
-    origin: ItemOrigin
-
+from dto import Author, BookStore, BookItem
 
 def main():
-    item_origin = ItemOrigin(country="Ethiopia", production_date="02/12/2023")
 
-    # 1. DCO : Data Classes Object
-    my_item1 = InventoryItem(name="printer", 
-                             quantity=5, 
-                             serial_num="HOUEHSK",
-                             origin=item_origin)
-    #print(my_item1.__dict__)
+    bookitem_list = []
+    bookitem_list.append(BookItem(name="Harry Potter", author="Joanne Rowling", year_published=1997))
+    bookitem_list.append(BookItem(name="Load of the Rings", author="John Tolkien", year_published=1954))
+    print(bookitem_list)
 
-    # 2. DCO -> JSON (serialized)
-    my_serialized_object1 = my_item1.__dict__
-    print(my_serialized_object1) # {'name': 'printer', 'quantity': 5, 'serial_num': 'HOUEHSK', 'origin': ItemOrigin(country='Ethiopian', production_data='02/12/2023')}
+    my_bookstore = BookStore(name="Auk Univ Store", book_shelve=bookitem_list)
+    print(my_bookstore.__dict__)
 
-    # 3. Json -> DCO (parsing)
-    my_item2 = InventoryItem(**my_serialized_object1)
-    print(my_item2.__dict__) # {'name': 'printer', 'quantity': 5, 'serial_num': 'HOUEHSK', 'origin': ItemOrigin(country='Ethiopian', production_data='02/12/2023')}
-    
+    try:
+        my_author = Author(name="Joanne Rowling", author_id="JOAN-2223")        
+    except Exception as ve:
+        print("demonstrating that the Author name has to be valid")
+    else:
+        print(my_author.__dict__)
+
 if __name__ == "__main__":
     main()
