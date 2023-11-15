@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from typing import Union
+from typing import Union # typing : List, Dick, Set, Final
 from pydantic import BaseModel
 
 app = FastAPI()
