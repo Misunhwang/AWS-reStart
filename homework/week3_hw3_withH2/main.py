@@ -6,16 +6,6 @@ from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
-"""
-my_inventory_item_dict: Dict[str, InventoryItem] = {}
-
-@app.put("/items/{serial_num}")
-def create_item(item: InventoryItem, serial_num: str) -> None :
-    my_inventory_item_dict[serial_num] = item
-    print(my_inventory_item_dict)
-
-"""
-
 # 2) Define my_book_item_dict Dictionary
 my_book_item_dict: Dict[str, BookItem] = {}
 
