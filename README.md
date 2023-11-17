@@ -18,3 +18,5 @@ Week3 homework 2: homework/week3_hw2/
 Week3 homework 3 using homework 1: homework/week3_hw3_withH1/
 
 Week3 homework 3 using homework 2: homework/week3_hw3_withH2/
+
+Week3 homework 4 using homework 1: homework/week3_hw4_withH1/

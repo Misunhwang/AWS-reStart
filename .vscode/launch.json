@@ -17,7 +17,7 @@
             ],
             "jinja": true,
             "justMyCode": true,
-            "cwd": "${workspaceRoot}/homework/week3_hw3_withH2/"
+            "cwd": "${workspaceRoot}/homework/week3_hw4_withH1/"
         }
     ]
 }
