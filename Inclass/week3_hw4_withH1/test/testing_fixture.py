@@ -3,7 +3,9 @@ from fastapi.testclient import TestClient
 from main import app
 import pytest
 
-client = TestClient(app)
+@pytest.fixture
+def client():
+    yield TestClient(app)
 
 # to use GET/DELETE API, PUT api needs to get used first - code repetition
 # 1) fixture - precondition to test case. Pre-initialization of an object and return it
