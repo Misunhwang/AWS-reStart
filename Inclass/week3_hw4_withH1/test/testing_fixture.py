@@ -11,6 +11,7 @@ client = TestClient(app)
 # 3) Mock - blackbox testing
 
 
+
 @pytest.fixture
 def good_payload():
     return {
