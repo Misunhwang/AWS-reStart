@@ -2,6 +2,7 @@ from typing import Optional
 
 # One line of FastAPI imports here later &#x1f448;
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+from fastapi import FastAPI
 
 
 class Hero(SQLModel, table=True):
@@ -32,42 +33,27 @@ def on_startup():
 
 @app.post("/heroes/")
 def create_hero(hero: Hero):
-    # implement part 1 here
-    pass
+    with Session(engine) as session:
+        session.add(hero)
+        session.commit()
 
 
 @app.get("/heroes/{name}")
 def get_hero(name: str):
-    # implement part 2 here
-    pass
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.name == name)
+        # statement = select(Hero).where(Hero.name)
+
+        hero = session.exec(statement).first()  # return only one record
+        print(hero)
+        return hero
 
 
 @app.get("/heroes/")
 def get_heroes():
-    # implement part 3 here
-    pass
+    with Session(engine) as session:
+        statement = select(Hero)
 
-
-# hero_1 = Hero(name="Deadpond", secret_name="Dive Wilson")
-# hero_2 = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
-# hero_3 = Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)
-
-
-# engine = create_engine("sqlite:///database.db")
-
-
-# SQLModel.metadata.create_all(engine)
-
-# with Session(engine) as session:
-#     session.add(hero_1)
-#     session.add(hero_2)
-#     session.add(hero_3)
-#     session.commit()
-
-# with Session(engine) as session:
-#     statement = select(Hero).where(Hero.name == "Spider-Boy")
-#     heroes = session.exec(statement).all() #returns list of all records that match
-#     print(heroes)
-#     print(type(heroes))
-#     hero = session.exec(statement).first() #returns only first record
-#     print(hero)
+        heroes = session.exec(statement).all()  # return list of all records
+        print(heroes)
+        return heroes
