@@ -22,3 +22,7 @@ Week3 homework 3 using homework 2: homework/week3_hw3_withH2/
 Week3 homework 4 using homework 1: homework/week3_hw4_withH1/
 
 Week4 homework 1 using homework 4: homework/week4_hw1/
+
+Week4 homework 2: homework/week4_hw2/
+
+Week4 homework 3: homework/week4_hw3/
