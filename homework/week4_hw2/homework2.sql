@@ -123,3 +123,7 @@ from customer
     join staff on store.manager_staff_id = staff.staff_id and staff.first_name = 'Mike'
 where
     customer.store_id = store.store_id;
+
+--PRAGMA SQLITE_ENABLE_UPDATE_DELETE_LIMIT=ON;
+
+--PRAGMA table_info(actor);
