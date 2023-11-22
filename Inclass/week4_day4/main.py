@@ -38,6 +38,31 @@ def create_hero(hero: Hero):
         session.commit()
 
 
+# DTO
+class HeroUpdate(SQLModel):
+    name: Optional[str] = None
+    secret_name: Optional[str] = None
+    age: Optional[int] = None
+
+
+@app.patch("/heroes/", response_model=Hero)
+def change_secret_name(heroUpdate: HeroUpdate):
+    with Session(engine) as session:
+        statement = select(Hero).where(Hero.name == heroUpdate.name)
+        db_hero = session.exec(statement).first()
+
+        if not db_hero:
+            raise HTTPException(status_code=404, detail="Hero not found")
+
+        hero_data = heroUpdate.dict(exclude_unset=True)
+        for key, value in hero_data.items():
+            setattr(db_hero, key, value)
+        session.add(db_hero)
+        session.commit()
+        session.refresh(db_hero)
+        return db_hero
+
+
 @app.get("/heroes/{name}", response_model=Hero)
 def get_hero(name: str):
     with Session(engine) as session:
@@ -45,7 +70,8 @@ def get_hero(name: str):
         # statement = select(Hero).where(Hero.name)
 
         hero = session.exec(statement).first()  # return only one record
-
+        if not hero:
+            raise HTTPException(status_code=404, detail="Hero not found")
         print(hero)
         return hero
 
